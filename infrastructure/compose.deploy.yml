@@ -1,0 +1,20 @@
+# Server deployment uses pre-existing Oracle and immutable images. No builds here.
+services:
+  backend:
+    image: ${BACKEND_IMAGE:?Provide backend image digest}
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: oracle
+      JDBC_URL: ${JDBC_URL:?Provide an environment-specific Oracle JDBC URL}
+      DB_USERNAME: ${DB_USERNAME:?Provide the environment database user}
+      DB_PASSWORD: ${DB_PASSWORD:?Provide the environment database password}
+    security_opt: [no-new-privileges:true]
+  frontend:
+    image: ${FRONTEND_IMAGE:?Provide frontend image digest}
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${APP_PORT:-8088}:8080"
+    depends_on:
+      backend:
+        condition: service_healthy
+    security_opt: [no-new-privileges:true]

@@ -1,0 +1,41 @@
+# Local secrets; commit only placeholder examples.
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+
+# JavaScript dependencies and build/test output.
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+*.tsbuildinfo
+
+# Java build output. Keep Maven Wrapper files under .mvn/ tracked.
+target/
+*.class
+
+# Local editor and OS files.
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.log
+
+# Local data, imports, and database exports.
+local-data/
+*.dmp
+
+# Local tooling and deployment state.
+.local/
+.env.deploy
+release*.json
+*.sarif
