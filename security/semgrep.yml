@@ -1,0 +1,26 @@
+rules:
+  - id: iam-no-runtime-exec
+    languages: [java]
+    severity: ERROR
+    message: Do not execute operating-system commands from IAM application code; use an approved connector.
+    pattern-either:
+      - pattern: Runtime.getRuntime().exec(...)
+      - pattern: new ProcessBuilder(...)
+  - id: iam-no-concatenated-sql
+    languages: [java]
+    severity: ERROR
+    message: Use bound parameters instead of concatenating SQL expressions.
+    pattern-either:
+      - pattern: $S.executeQuery($A + $B)
+      - pattern: $S.executeUpdate($A + $B)
+      - pattern: $C.prepareStatement($A + $B)
+  - id: iam-no-raw-html
+    languages: [typescript, javascript]
+    severity: ERROR
+    message: Avoid raw HTML injection in the IAM portal.
+    pattern: <$TAG ... dangerouslySetInnerHTML={$VALUE} ... />
+  - id: iam-no-dynamic-eval
+    languages: [typescript, javascript]
+    severity: ERROR
+    message: Do not evaluate dynamically constructed JavaScript.
+    pattern: eval(...)

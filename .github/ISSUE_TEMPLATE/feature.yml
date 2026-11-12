@@ -1,0 +1,27 @@
+name: Feature / requirement
+description: Turn a Phase 1 requirement into a reviewable delivery item.
+body:
+  - type: input
+    id: requirement
+    attributes:
+      label: Requirement ID
+      placeholder: SSP-02, EM-01, PU-01, or foundation
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: User outcome and scope
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Include allowed and denied behavior, audit expectations, and test evidence.
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and open decisions
