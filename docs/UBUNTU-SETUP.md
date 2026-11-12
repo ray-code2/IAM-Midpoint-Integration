@@ -47,7 +47,8 @@ Expected: the Node 22 patch in `.nvmrc` (at least 22.22.2 for the test dependenc
 JDK 21, and a reachable Linux Docker server.
 The Maven Wrapper downloads the project's Maven version; a system Maven install
 is not required. This Ubuntu distribution already had Git, Node 22, npm and JDK 21
-when inspected. Windows PATH checks did not reveal those Linux tools.
+when inspected. Its system Node was 22.22.1, so select the newer patch in `.nvmrc`.
+Windows PATH checks did not reveal those Linux tools.
 
 If Java/basic utilities are missing:
 
@@ -58,6 +59,19 @@ sudo apt install -y git openjdk-21-jdk curl unzip python3 ca-certificates
 
 Use your approved Node version manager to select the version in `.nvmrc`.
 With nvm already installed, run `nvm install` followed by `nvm use` in the repo.
+If nvm is not installed, follow its official setup guide:
+https://github.com/nvm-sh/nvm#installing-and-updating
+
+For this existing working copy only, a checksum-verified Node 22.23.5 was also
+downloaded under the ignored `.local/node` directory during validation. You can
+use it for the current terminal without replacing the system Node:
+
+```bash
+# Run from this working copy's root, if .local/node/bin/node exists.
+export PATH="$PWD/.local/node/bin:$PATH"
+node --version
+```
+
 Do not mix Windows node_modules with Linux node_modules; run `npm ci` in Ubuntu.
 
 ## 3. Enable Docker for Ubuntu

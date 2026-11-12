@@ -39,6 +39,10 @@ PR jobs have read-only repository permission and no deployment credentials. They
 run on GitHub-hosted Ubuntu, never the internal deployment runner. Oracle in CI
 is disposable, uses generated credentials and synthetic data, and is cleaned up
 after the job. CI does not connect to corporate AD or production Oracle.
+After integration tests, CI removes its disposable database image/volume and
+builder cache before downloading scanner databases. The tested application
+images remain available for scanning and publication. This avoids filling the
+hosted runner's disk with both Oracle and the Java vulnerability database.
 
 On a successful **push to main only**, the container job uploads the exact tested
 images for the publish job. That job loads them without rebuilding, pushes them
@@ -77,6 +81,12 @@ These are GitHub settings, not effects of committing workflow files. Private-rep
 rules and environment protections depend on the account/organization plan. If a
 required control is unavailable, resolve the hosting/approval mechanism before
 claiming that gate is enforced. Do not make the repository public to unlock it.
+
+**Observed during setup:** the rulesets API for this private repository returned
+HTTP 403 and requested an upgrade to GitHub Pro. CI jobs can still run, but no
+required-merge rule is claimed to be enforced. Choose an eligible private-repo
+plan or approved organization before relying on protected main; until then,
+manual review is a prototype procedure rather than an enforced control.
 
 ## CD workflow: `.github/workflows/deploy.yml`
 

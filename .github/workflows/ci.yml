@@ -107,6 +107,12 @@ jobs:
       - run: bash scripts/smoke.sh
       - run: bash ./mvnw --batch-mode --no-transfer-progress -Poracle-it verify
         working-directory: backend
+      - name: Reclaim disposable database and builder storage before image scans
+        run: |
+          docker compose down --volumes --remove-orphans
+          docker image rm gvenzl/oracle-free:23-slim-faststart
+          docker builder prune --all --force
+          df -h /
       - uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         with:
           image-ref: iam-backend:local
